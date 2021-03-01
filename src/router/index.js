@@ -113,6 +113,67 @@ export const asyncRoutes = [
       }
     ]
   },
+  // 职业顾问管理
+  {
+    path: '/adviser',
+    component: Layout,
+    redirect: '/adviser/index',
+    hidden: false,
+    children: [
+      {
+        path: 'AdviserIndex',
+        component: () => import('@/views/adviser/index'),
+        name: 'AdviserIndex',
+        meta: { title: '置业顾问', icon: 'skill', noCache: true, roles: ['admin'] }
+      }
+    ]
+  },
+  // 楼盘管理
+  {
+    path: '/loupan',
+    component: Layout,
+    redirect: '/loupan/index',
+    hidden: false,
+    children: [
+      {
+        path: 'LoupanIndex',
+        component: () => import('@/views/loupan/index'),
+        name: 'LoupanIndex',
+        meta: { title: '楼盘管理', icon: 'skill', noCache: true, roles: ['admin'] }
+      }
+    ]
+  },
+  // 户型管理
+  {
+    path: '/huxing',
+    component: Layout,
+    redirect: '/huxing/index',
+    hidden: false,
+    children: [
+      {
+        path: 'HuxingIndex',
+        component: () => import('@/views/huxing/index'),
+        name: 'HuxingIndex',
+        meta: { title: '户型管理', icon: 'skill', noCache: true, roles: ['admin'] }
+      }
+    ]
+  },
+  // 房源管理
+  {
+    path: '/fangyuan',
+    component: Layout,
+    redirect: '/fangyuan/index',
+    hidden: false,
+    children: [
+      {
+        path: 'FangYuanIndex',
+        component: () => import('@/views/fangyuan/index'),
+        name: 'FangYuanIndex',
+        meta: { title: '房源管理', icon: 'skill', noCache: true, roles: ['admin'] }
+      }
+    ]
+  },
+
   {
     path: '/error',
     component: Layout,
