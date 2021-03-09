@@ -8,6 +8,16 @@
       <el-table-column prop="id" label="ID" width="150" />
       <el-table-column prop="name" label="楼盘名称" />
       <el-table-column prop="address" label="楼盘位置" />
+      <el-table-column prop="startDate" label="开始时间">
+        <template slot-scope="scope">
+          <span>{{ dataFormat(scope.row.startDate) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="startDate" label="结束时间">
+        <template slot-scope="scope">
+          <span>{{ dataFormat(scope.row.endDate) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="remark" label="备注" />
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
@@ -29,6 +39,18 @@
         </el-form-item>
         <el-form-item label="楼盘位置" prop="checkPass">
           <el-input v-model="loupanObj.address" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="时间" prop="checkPass">
+          <el-row>
+            <el-col :span="2">开始时间:</el-col>
+            <el-col :span="6">
+              <el-date-picker v-model="loupanObj.startDate" type="date" placeholder="选择日期" />
+            </el-col>
+            <el-col :span="2">结束时间:</el-col>
+            <el-col :span="6">
+              <el-date-picker v-model="loupanObj.endDate" type="date" placeholder="选择日期" />
+            </el-col>
+          </el-row>
         </el-form-item>
         <el-form-item label="备注" prop="age">
           <el-input v-model.number="loupanObj.remark" type="textarea" />
@@ -62,7 +84,9 @@ export default {
         name: '',
         address: '',
         remark: '',
-        description: ''
+        description: '',
+        startDate: '',
+        endDate: ''
       },
       currentLoupan: {}
     }
@@ -90,6 +114,8 @@ export default {
         this.loupanObj.address = ''
         this.loupanObj.description = ''
         this.loupanObj.remark = ''
+        this.loupanObj.startDate = ''
+        this.loupanObj.endDate = ''
 
         this.getAllLoupan()
         this.isEdit = false
@@ -107,6 +133,8 @@ export default {
         this.loupanObj.address = ''
         this.loupanObj.description = ''
         this.loupanObj.remark = ''
+        this.loupanObj.startDate = ''
+        this.loupanObj.endDate = ''
         this.getAllLoupan()
         this.isEdit = false
       })
@@ -137,6 +165,12 @@ export default {
       }).catch(() => {
         this.$message.info('已取消')
       })
+    },
+    dataFormat(v) {
+      if (v != null) {
+        var date = new Date(v)
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+      }
     }
   }
 }

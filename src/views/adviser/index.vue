@@ -5,10 +5,15 @@
     </el-row>
 
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="id" label="ID" width="150" />
-      <el-table-column prop="name" label="姓名" />
-      <el-table-column prop="phone" label="电话" />
-      <el-table-column prop="remark" label="备注" />
+      <el-table-column prop="id" label="ID" width="80" />
+      <el-table-column prop="name" label="姓名" width="200" />
+      <el-table-column prop="phone" label="电话" width="180" />
+      <el-table-column prop="introduce" label="个人介绍">
+        <template slot-scope="scope">
+          <div v-html="scope.row.introduce" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="remark" label="备注" width="250" />
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="editInfo(scope.row)">编辑</el-button>
@@ -18,7 +23,7 @@
     </el-table>
 
     <!--添加用户对话框-->
-    <el-dialog title="添加顾问" :visible.sync="dialogVisible" width="50%">
+    <el-dialog title="添加顾问" :visible.sync="dialogVisible" width="60%">
       <el-form :model="adviserObj" label-width="100px" class="demo-ruleForm">
         <el-form-item label="姓名" prop="pass">
           <el-input v-model="adviserObj.name" autocomplete="off" />
@@ -28,6 +33,9 @@
         </el-form-item>
         <el-form-item label="备注" prop="age">
           <el-input v-model.number="adviserObj.remark" type="textarea" />
+        </el-form-item>
+        <el-form-item label="详细介绍" prop="age">
+          <tinymce v-model="adviserObj.introduce" :height="300" />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -41,8 +49,10 @@
 
 <script>
 import { saveAdviser, getAll, deleteById, updateAdviser } from '@/api/adviser'
+import Tinymce from '@/components/Tinymce'
 export default {
   name: 'AdviserIndex',
+  components: { Tinymce },
   data() {
     return {
       isEdit: false,
@@ -52,7 +62,8 @@ export default {
         name: '',
         phone: '',
         password: '',
-        remark: ''
+        remark: '',
+        introduce: ''
       }
     }
   },
@@ -72,13 +83,14 @@ export default {
         this.adviserObj.name = ''
         this.adviserObj.phone = ''
         this.adviserObj.remark = ''
+        this.adviserObj.introduce = ''
 
         this.getAllAdviser()
         this.isEdit = false
       })
     },
     enshureUpdateAdviser() {
-      if (this.adviserObj.name === '' || this.adviserObj.phone === '' || this.adviserObj.remark === '') {
+      if (this.adviserObj.name === '' || this.adviserObj.phone === '' || this.adviserObj.remark === '' || this.adviserObj.introduce === '') {
         this.$message.warning('请完善信息！！！')
         return
       }
@@ -88,6 +100,7 @@ export default {
         this.adviserObj.name = ''
         this.adviserObj.phone = ''
         this.adviserObj.remark = ''
+        this.adviserObj.introduce = ''
         this.getAllAdviser()
         this.isEdit = false
       })

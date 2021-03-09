@@ -109,7 +109,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/test/index'),
         name: 'TestIndex',
-        meta: { title: '测试页面', icon: 'skill', noCache: true, roles: ['admin'] }
+        meta: { title: '测试页面', icon: 'skill', noCache: true, roles: ['admin', 'adviser'] }
       }
     ]
   },
@@ -170,6 +170,21 @@ export const asyncRoutes = [
         component: () => import('@/views/fangyuan/index'),
         name: 'FangYuanIndex',
         meta: { title: '房源管理', icon: 'skill', noCache: true, roles: ['admin'] }
+      }
+    ]
+  },
+  // 用户预约管理
+  {
+    path: '/yuyue',
+    component: Layout,
+    redirect: '/yuyue/index',
+    hidden: false,
+    children: [
+      {
+        path: 'YuyueIndex',
+        component: () => import('@/views/yuyue/index'),
+        name: 'YuyueIndex',
+        meta: { title: '预约管理', icon: 'guide', noCache: true, roles: ['adviser'] }
       }
     ]
   },

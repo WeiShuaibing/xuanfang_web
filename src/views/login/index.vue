@@ -149,7 +149,8 @@ export default {
       }
       // this.loginForm.password = this.$md5(this.loginForm.password)
       const username = this.loginForm.username
-      const md5_pwd = this.$md5(this.loginForm.password)
+      // const md5_pwd = this.$md5(this.loginForm.password)
+      const md5_pwd = this.loginForm.password
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true

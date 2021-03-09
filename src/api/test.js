@@ -7,3 +7,14 @@ export function testInfo() {
     method: 'GET'
   })
 }
+
+export function pay() {
+  return request({
+    url: BASE_URL + 'test/pay',
+    method: 'POST',
+    data: {
+      userId: 123,
+      fangyuanId: '456'
+    }
+  })
+}
