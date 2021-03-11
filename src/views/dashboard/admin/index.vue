@@ -1,20 +1,18 @@
 <template>
   <div class="dashboard-editor-container">
-<!--    <github-corner class="github-corner" />-->
+    <!--    <github-corner class="github-corner" />-->
 
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <!-- <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
-    </el-row>
+    </el-row>-->
 
   </div>
 </template>
 
 <script>
 import PanelGroup from './components/PanelGroup'
-import LineChart from './components/LineChart'
-import PieChart from './components/PieChart'
 const lineChartData = {
   newVisitis: {
     expectedData: [100, 120, 161, 134, 105, 160, 165],
@@ -37,9 +35,7 @@ const lineChartData = {
 export default {
   name: 'DashboardAdmin',
   components: {
-    PanelGroup,
-    LineChart,
-    PieChart
+    PanelGroup
   },
   data() {
     return {

@@ -17,10 +17,18 @@
         </el-table-column>
         <el-table-column prop="huxing.remark" label="户型备注" />
         <el-table-column prop="huxing.area" label="户型面积(㎡)" />
-        <el-table-column label="操作" width="200">
+        <el-table-column prop="status" label="状态">
           <template slot-scope="scope">
-            <el-button type="primary" size="small" @click="editInfo(scope.row)">编辑</el-button>
-            <el-button type="danger" size="small" @click="deleteInfo(scope.row.id)">删除</el-button>
+            <el-tag v-if="scope.row.status === 0">预定中</el-tag>
+            <el-tag v-if="scope.row.status === 1" type="success">已预定</el-tag>
+            <el-tag v-if="scope.row.status === 2" type="info">已成交</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="220">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini" @click="editInfo(scope.row)">编辑</el-button>
+            <el-button type="danger" size="mini" @click="deleteInfo(scope.row.id)">删除</el-button>
+            <el-button v-if="scope.row.status === 1" plain type="success" size="mini" @click="yiShou(scope.row)">已售</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -69,7 +77,7 @@
 <script>
 import { getAll as getAllLoupan } from '@/api/loupan'
 import { getAll as getAllHuxing } from '@/api/huxing'
-import { getAll as getAllFangyaun, save, deleteById, update } from '../../api/fangyuan'
+import { getAll as getAllFangyaun, save, deleteById, update, updateStatus } from '../../api/fangyuan'
 
 export default {
   name: 'FangYuanIndex',
@@ -94,6 +102,12 @@ export default {
     this.allFangyaun()
   },
   methods: {
+    yiShou(row) {
+      updateStatus(row.id, 2).then(res => {
+        this.$message.success('修改房源状态成功！')
+        this.allFangyaun()
+      })
+    },
     enshureEdit() {
       update(this.fangyuanObj).then(res => {
         this.$message.success('修改成功！')

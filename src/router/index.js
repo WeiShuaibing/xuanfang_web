@@ -103,7 +103,7 @@ export const asyncRoutes = [
     path: '/test',
     component: Layout,
     redirect: '/test/index',
-    hidden: false,
+    hidden: true,
     children: [
       {
         path: 'index',
@@ -169,7 +169,7 @@ export const asyncRoutes = [
         path: 'FangYuanIndex',
         component: () => import('@/views/fangyuan/index'),
         name: 'FangYuanIndex',
-        meta: { title: '房源管理', icon: 'skill', noCache: true, roles: ['admin'] }
+        meta: { title: '房源管理', icon: 'skill', noCache: true, roles: ['admin', 'adviser'] }
       }
     ]
   },

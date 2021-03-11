@@ -31,6 +31,16 @@ export function getById(id) {
   })
 }
 
+export function updateStatus(id, status) {
+  return request({
+    url: BASE_URL + 'fangyuan/updateStatus',
+    method: 'GET',
+    params: {
+      id, status
+    }
+  })
+}
+
 export function save(obj) {
   return request({
     url: BASE_URL + 'fangyuan/save',
