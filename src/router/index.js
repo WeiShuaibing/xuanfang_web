@@ -113,6 +113,36 @@ export const asyncRoutes = [
       }
     ]
   },
+  // 公告管理
+  {
+    path: '/notice',
+    component: Layout,
+    redirect: '/notice/index',
+    hidden: false,
+    children: [
+      {
+        path: 'NoticeIndex',
+        component: () => import('@/views/notice/index'),
+        name: 'NoticeIndex',
+        meta: { title: '公告管理', icon: 'skill', noCache: true }
+      }
+    ]
+  },
+  // 用户管理
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/index',
+    hidden: false,
+    children: [
+      {
+        path: 'UserIndex',
+        component: () => import('@/views/user/index'),
+        name: 'UserIndex',
+        meta: { title: '用户管理', icon: 'skill', noCache: true }
+      }
+    ]
+  },
   // 职业顾问管理
   {
     path: '/adviser',

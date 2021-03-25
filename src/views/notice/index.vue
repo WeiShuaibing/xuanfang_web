@@ -6,11 +6,8 @@
 
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="id" label="ID" width="150" />
-      <el-table-column prop="home" label="房间" />
-      <el-table-column prop="keting" label="客厅" />
-      <el-table-column prop="washroom" label="卫生间" />
-      <el-table-column prop="area" label="面积" />
-      <el-table-column prop="remark" label="备注" />
+      <el-table-column prop="text" label="公告内容" />
+      <el-table-column prop="createDate" width="200" label="创建时间" />
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="editInfo(scope.row)">编辑</el-button>
@@ -20,22 +17,10 @@
     </el-table>
 
     <!--添加对话框-->
-    <el-dialog title="添加户型信息" :visible.sync="dialogVisible" width="50%">
-      <el-form :model="huxingObj" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="房间数" prop="pass">
-          <el-input-number v-model="huxingObj.home" :min="1" :max="10" />
-        </el-form-item>
-        <el-form-item label="客厅数" prop="checkPass">
-          <el-input-number v-model="huxingObj.keting" :min="1" :max="10" />
-        </el-form-item>
-        <el-form-item label="卫生间数" prop="checkPass">
-          <el-input-number v-model="huxingObj.washroom" :min="1" :max="10" />
-        </el-form-item>
-        <el-form-item label="面积" prop="checkPass">
-          <el-input-number v-model="huxingObj.area" :min="50" :max="300" />
-        </el-form-item>
-        <el-form-item label="备注" prop="age">
-          <el-input v-model="huxingObj.remark" type="textarea" />
+    <el-dialog title="添加公告信息" :visible.sync="dialogVisible" width="50%">
+      <el-form :model="noticeObj" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="公告内容" prop="pass">
+          <el-input v-model="noticeObj.text" type="textarea" />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -48,20 +33,16 @@
 </template>
 
 <script>
-import { savHuxing, getAll, deleteById, updateHuxing } from '@/api/huxing'
+import { save, getAll, deleteById, update } from '@/api/notice'
 export default {
-  name: 'HuxingIndex',
+  name: 'NoticeIndex',
   data() {
     return {
       isEdit: false,
       tableData: [],
       dialogVisible: false,
-      huxingObj: {
-        home: '',
-        keting: '',
-        area: '',
-        washroom: '',
-        remark: ''
+      noticeObj: {
+        text: ''
       }
     }
   },
@@ -70,37 +51,28 @@ export default {
   },
   methods: {
     enshureAdd() {
-      if (this.huxingObj.home === '' || this.huxingObj.keting === '' || this.huxingObj.washroom === '') {
+      if (this.noticeObj.text === '') {
         this.$message.warning('请完善信息！！！')
         return
       }
-      savHuxing(this.huxingObj).then(res => {
+      save(this.noticeObj).then(res => {
         this.$message.success('添加成功！')
         this.dialogVisible = false
-        this.huxingObj.home = ''
-        this.huxingObj.keting = ''
-        this.huxingObj.washroom = ''
-        this.huxingObj.area = ''
-        this.huxingObj.remark = ''
+        this.noticeObj.text = ''
 
         this.getAllInfo()
         this.isEdit = false
       })
     },
     enshureUpdate() {
-      if (this.huxingObj.home === '' || this.huxingObj.keting === '' ||
-        this.huxingObj.washroom === '' || this.huxingObj.area === '') {
+      if (this.noticeObj.text === '') {
         this.$message.warning('请完善信息！！！')
         return
       }
-      updateHuxing(this.huxingObj).then(res => {
+      update(this.noticeObj).then(res => {
         this.$message.success('修改成功！')
         this.dialogVisible = false
-        this.huxingObj.home = ''
-        this.huxingObj.keting = ''
-        this.huxingObj.washroom = ''
-        this.huxingObj.area = ''
-        this.huxingObj.remark = ''
+        this.noticeObj.text = ''
         this.getAllInfo()
         this.isEdit = false
       })
@@ -116,7 +88,7 @@ export default {
     editInfo(row) {
       this.isEdit = true
       this.dialogVisible = true
-      this.huxingObj = row
+      this.noticeObj = row
     },
     deleteInfo(id) {
       this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {

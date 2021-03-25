@@ -16,6 +16,13 @@ export function getInfo(token) {
   })
 }
 
+export function getAllUser() {
+  return request({
+    url: BASE_URL + 'user/getAll',
+    method: 'get'
+  })
+}
+
 export function logout() {
   return request({
     url: BASE_URL + 'user/logout',
@@ -86,6 +93,16 @@ export function searchByName(matchStr) {
     method: 'GET',
     params: {
       matchStr
+    }
+  })
+}
+export function updateStatus(userId, status) {
+  return request({
+    url: BASE_URL + 'user/updateStatus',
+    method: 'GET',
+    params: {
+      userId,
+      status
     }
   })
 }
